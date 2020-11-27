@@ -57,6 +57,53 @@ typedef int HYPRE_Int;
 
 #include <float.h>
 
+/*--------------------------------------------------------------------------
+* Reset build types for Multi-precision build
+*---------------------------------------------------------------------------*/
+#if defined(HYPRE_MIXED_PRECISION)
+#if defined(MP_BUILD_SINGLE)
+#undef HYPRE_LONG_DOUBLE
+#ifndef HYPRE_SINGLE
+#define HYPRE_SINGLE 1
+#endif
+#elif defined(MP_BUILD_LONGDOUBLE)
+#undef HYPRE_SINGLE
+#ifndef HYPRE_LONG_DOUBLE
+#define HYPRE_LONG_DOUBLE 1
+#endif
+#else
+#undef HYPRE_SINGLE
+#undef HYPRE_LONG_DOUBLE
+#endif
+/*--------------------------------------------------------------------------
+ * HYPRE multiprecision extensions
+ *--------------------------------------------------------------------------*/
+/* matrix/ solver precision options */
+typedef enum 
+{
+   HYPRE_REAL_SINGLE,
+   HYPRE_REAL_DOUBLE,
+   HYPRE_REAL_LONGDOUBLE
+} HYPRE_Precision;
+/* Macro to generate typed functions */
+#if defined(HYPRE_SINGLE)
+#define FUNC_SUFFIX flt
+#elif defined(HYPRE_LONG_DOUBLE)
+#define FUNC_SUFFIX long_dbl
+#else /* HYPRE_DOUBLE */
+#define FUNC_SUFFIX dbl
+#endif
+
+#define CONCAT2_(a, b) a ## _ ## b
+#define CONCAT_(a, b) CONCAT2_(a, b)
+/* Apply suffix to define typed function */
+#define HYPRE_TYPED_FUNC(a) CONCAT_(a, FUNC_SUFFIX)
+
+#else
+/* define no-op for typed function macro */
+#define HYPRE_TYPED_FUNC(a) a
+#endif
+
 #if defined(HYPRE_SINGLE)
 typedef float HYPRE_Real;
 #define HYPRE_REAL_MAX FLT_MAX

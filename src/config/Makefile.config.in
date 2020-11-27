@@ -83,6 +83,8 @@ PYTHON       = @PYTHON@
 
 BUILD_JAVA = @BUILD_JAVA@
 
+MP_BUILD = @MP_BUILD@
+
 AR     = @AR@
 RANLIB = @RANLIB@
 

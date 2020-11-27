@@ -109,6 +109,9 @@
 /* Define to 1 if using long long int for HYPRE_BigInt */
 #undef HYPRE_MIXEDINT
 
+/* Define to 1 if using mixed-precision for HYPRE_Real type */
+#undef HYPRE_MIXED_PRECISION
+
 /* No global partitioning being used */
 #undef HYPRE_NO_GLOBAL_PARTITION
 
