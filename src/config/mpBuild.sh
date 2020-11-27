@@ -11,20 +11,20 @@ HDRFILENAME=$2
 ROOTNAME=$3
 
 # step 1: Transform functions names to use macro definition
-../funcToMacroFunc.sh $SRCFILENAME $ROOTNAME
+../config/funcToMacroFunc.sh $SRCFILENAME $ROOTNAME
 
 # step 2: Generate intermediate file used to generate C code for switching between types
 ## Do this before step 3 to avoid replicated functions.
-../genIntFile.sh $HDRFILENAME $ROOTNAME
+../config/genIntFile.sh $HDRFILENAME $ROOTNAME
 
 # step 3: Generate multiprecision type protos.
 ## NOTE: This overwrites $HDRFILENAME !
-../genMPProtos.sh $HDRFILENAME $ROOTNAME
+../config/genMPProtos.sh $HDRFILENAME $ROOTNAME
 
 # step 4: Generate C code from intermediate file containing function prototypes
 MPSRC=$(awk -v root=$ROOTNAME 'BEGIN{ print "mp_"tolower(root)".c"}')
 INTFILE=$HDRFILENAME.int
-../genCodeFromProtos.sh $INTFILE $MPSRC $ROOTNAME 2>/dev/null
+../config/genCodeFromProtos.sh $INTFILE $MPSRC $ROOTNAME 2>/dev/null
 
 # step 5: Delete intermediate file
 rm -rf $INTFILE

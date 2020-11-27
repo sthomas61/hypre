@@ -12,7 +12,7 @@ INTERNAL_HEADER=_hypre_utilities.h
 FINC=$(echo $FIN | awk -F '.int' '{print $1}')
 
 # Generate copyright header
-../writeHeader.sh $FOUT
+../config/writeHeader.sh $FOUT
 # include files
 cat >> $FOUT <<@
 
