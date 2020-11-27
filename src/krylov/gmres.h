@@ -107,7 +107,7 @@ typedef struct
    HYPRE_Int     logging;  /* extra computations for logging when logging>0 */
    HYPRE_Real  *norms;
    char    *log_file_name;
-
+   HYPRE_Precision solver_precision;
 } hypre_GMRESData;
 
 #ifdef __cplusplus

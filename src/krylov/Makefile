@@ -33,7 +33,6 @@ HEADERS =\
 FILES =\
  bicgstab.c\
  cgnr.c\
- gmres.c\
  cogmres.c\
  flexgmres.c\
  lgmres.c\
@@ -53,7 +52,8 @@ FILES =\
 # Multiprecision "typed" files
 #######################
  MP_FILES=\
-  pcg.c 
+  pcg.c \
+  gmres.c
   
 ifeq (${MP_BUILD}, 1) 
 
@@ -62,7 +62,8 @@ ifeq (${MP_BUILD}, 1)
 # Wrappers for "typed" files.
 ##########################
    MP_FILES_XTRA=\
-    mp_pcg.c
+    mp_pcg.c \
+    mp_gmres.c
 #
    OBJS = ${FILES:.c=.o} ${MP_FILES_XTRA:.c=.o} 
    MP_OBJS = ${MP_FILES:.c=.o} 
