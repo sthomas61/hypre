@@ -25,9 +25,11 @@ HYPRE_SStructGMRESCreate( MPI_Comm             comm,
          hypre_SStructKrylovClearVector,
          hypre_SStructKrylovScaleVector, hypre_SStructKrylovAxpy,
          hypre_SStructKrylovIdentitySetup, hypre_SStructKrylovIdentity );
-
+#if defined(HYPRE_MIXED_PRECISION) //DOK-temp
+   *solver = ( (HYPRE_SStructSolver) hypre_GMRESCreate( gmres_functions, HYPRE_REAL_DOUBLE ) );
+#else
    *solver = ( (HYPRE_SStructSolver) hypre_GMRESCreate( gmres_functions ) );
-
+#endif
    return hypre_error_flag;
 }
 

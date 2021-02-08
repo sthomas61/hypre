@@ -548,7 +548,11 @@ HYPRE_Int HYPRE_ParCSRFlexGMRESGetResidual ( HYPRE_Solver solver , HYPRE_ParVect
 HYPRE_Int HYPRE_ParCSRFlexGMRESSetModifyPC ( HYPRE_Solver solver , HYPRE_PtrToModifyPCFcn modify_pc );
 
 /* HYPRE_parcsr_gmres.c */
+#if defined(HYPRE_MIXED_PRECISION)
+HYPRE_Int HYPRE_ParCSRGMRESCreateMP ( MPI_Comm comm , HYPRE_Solver *solver, HYPRE_Precision solver_precision );
+#else
 HYPRE_Int HYPRE_ParCSRGMRESCreate ( MPI_Comm comm , HYPRE_Solver *solver );
+#endif
 HYPRE_Int HYPRE_ParCSRGMRESDestroy ( HYPRE_Solver solver );
 HYPRE_Int HYPRE_ParCSRGMRESSetup ( HYPRE_Solver solver , HYPRE_ParCSRMatrix A , HYPRE_ParVector b , HYPRE_ParVector x );
 HYPRE_Int HYPRE_ParCSRGMRESSolve ( HYPRE_Solver solver , HYPRE_ParCSRMatrix A , HYPRE_ParVector b , HYPRE_ParVector x );
@@ -713,7 +717,11 @@ HYPRE_Int HYPRE_ParaSailsGetLogging ( HYPRE_Solver solver , HYPRE_Int *logging )
 HYPRE_Int HYPRE_ParaSailsBuildIJMatrix ( HYPRE_Solver solver , HYPRE_IJMatrix *pij_A );
 
 /* HYPRE_parcsr_pcg.c */
+#if defined(HYPRE_MIXED_PRECISION)
+HYPRE_Int HYPRE_ParCSRPCGCreateMP ( MPI_Comm comm , HYPRE_Solver *solver, HYPRE_Precision solver_precision );
+#else
 HYPRE_Int HYPRE_ParCSRPCGCreate ( MPI_Comm comm , HYPRE_Solver *solver );
+#endif
 HYPRE_Int HYPRE_ParCSRPCGDestroy ( HYPRE_Solver solver );
 HYPRE_Int HYPRE_ParCSRPCGSetup ( HYPRE_Solver solver , HYPRE_ParCSRMatrix A , HYPRE_ParVector b , HYPRE_ParVector x );
 HYPRE_Int HYPRE_ParCSRPCGSolve ( HYPRE_Solver solver , HYPRE_ParCSRMatrix A , HYPRE_ParVector b , HYPRE_ParVector x );

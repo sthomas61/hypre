@@ -1859,7 +1859,11 @@ hypre_AMGHybridSolve( void               *AMGhybrid_vdata,
                   hypre_ParKrylovClearVector,
                   hypre_ParKrylovScaleVector, hypre_ParKrylovAxpy,
                   hypre_ParKrylovIdentitySetup, hypre_ParKrylovIdentity );
+#if defined(HYPRE_MIXED_PRECISION) // DOK-temp
+            pcg_solver = hypre_PCGCreate( pcg_functions, HYPRE_REAL_DOUBLE );
+#else
             pcg_solver = hypre_PCGCreate( pcg_functions );
+#endif 
 
             hypre_PCGSetTol(pcg_solver, tol);
             hypre_PCGSetAbsoluteTol(pcg_solver, a_tol);
@@ -1926,8 +1930,11 @@ hypre_AMGHybridSolve( void               *AMGhybrid_vdata,
                   hypre_ParKrylovClearVector,
                   hypre_ParKrylovScaleVector, hypre_ParKrylovAxpy,
                   hypre_ParKrylovIdentitySetup, hypre_ParKrylovIdentity );
+#if defined(HYPRE_MIXED_PRECISION)
+            pcg_solver = hypre_GMRESCreate( gmres_functions, HYPRE_REAL_DOUBLE );
+#else
             pcg_solver = hypre_GMRESCreate( gmres_functions );
-
+#endif            
             hypre_GMRESSetTol(pcg_solver, tol);
             hypre_GMRESSetAbsoluteTol(pcg_solver, a_tol);
             hypre_GMRESSetKDim(pcg_solver, k_dim);

@@ -8,29 +8,31 @@
 #include "_hypre_utilities.h"
 #include "krylov.h"
 
-
+/*** NOTE: The functions in this file are only built when Mixed-Precision is enabled ***/
 
 /*--------------------------------------------------------------------------
 * *hypre_GMRESCreate
 *--------------------------------------------------------------------------*/
 void 
-*hypre_GMRESCreate( hypre_GMRESFunctions *gmres_functions)
+*hypre_GMRESCreate( hypre_GMRESFunctions *gmres_functions, HYPRE_Precision solver_precision)
 {
-   hypre_GMRESData *gmres_data = (hypre_GMRESData *)gmres_functions;
-   switch (gmres_data-> solver_precision)
+   hypre_GMRESData *gmres_data;
+   switch (solver_precision)
    {
       case HYPRE_REAL_SINGLE:
-         hypre_GMRESCreate_flt ( gmres_functions);
+         gmres_data = (hypre_GMRESData *)hypre_GMRESCreate_flt ( gmres_functions);
          break;
       case HYPRE_REAL_DOUBLE:
-         hypre_GMRESCreate_dbl ( gmres_functions);
+         gmres_data = (hypre_GMRESData *)hypre_GMRESCreate_dbl ( gmres_functions);
          break;
       case HYPRE_REAL_LONGDOUBLE:
-         hypre_GMRESCreate_ldbl ( gmres_functions);
+         gmres_data = (hypre_GMRESData *)hypre_GMRESCreate_ldbl ( gmres_functions);
          break;
       default:
          hypre_printf("Unknown solver precision" );
    }
+   /* set solver precision for solver data */
+   gmres_data->solver_precision = solver_precision;
    return (void*)gmres_data;
 }
 

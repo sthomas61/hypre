@@ -140,7 +140,9 @@ typedef struct
    HYPRE_Int    logging;  /* extra computations for logging when logging>0 */
    HYPRE_Real  *norms;
    HYPRE_Real  *rel_norms;
+#if defined(HYPRE_MIXED_PRECISION)   
    HYPRE_Precision solver_precision;
+#endif
 } hypre_PCGData;
 
 #define hypre_PCGDataOwnsMatvecData(pcgdata)  ((pcgdata) -> owns_matvec_data)

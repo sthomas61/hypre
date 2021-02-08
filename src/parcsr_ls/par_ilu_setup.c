@@ -558,7 +558,11 @@ hypre_ILUSetup( void               *ilu_vdata,
                   hypre_ParKrylovAxpy,
                   hypre_ParKrylovIdentitySetup, //parCSR A -- inactive
                   hypre_ParKrylovIdentity ); //parCSR A -- inactive
+#if defined(HYPRE_MIXED_PRECISION) // DOK-temp
+            schur_solver = ( (HYPRE_Solver) hypre_GMRESCreate( gmres_functions, HYPRE_REAL_DOUBLE ) );
+#else
             schur_solver = ( (HYPRE_Solver) hypre_GMRESCreate( gmres_functions ) );
+#endif            
 
             /* setup GMRES parameters */
             HYPRE_GMRESSetKDim            (schur_solver, hypre_ParILUDataSchurGMRESKDim(ilu_data));
@@ -838,7 +842,11 @@ hypre_ILUSetup( void               *ilu_vdata,
                   hypre_ParKrylovAxpy,
                   hypre_ParKrylovIdentitySetup, //parCSR A -- inactive
                   hypre_ParKrylovIdentity ); //parCSR A -- inactive
+#if defined(HYPRE_MIXED_PRECISION)
+            schur_solver = ( (HYPRE_Solver) hypre_GMRESCreate( gmres_functions, HYPRE_REAL_DOUBLE ) );
+#else
             schur_solver = ( (HYPRE_Solver) hypre_GMRESCreate( gmres_functions ) );
+#endif 
 
             /* setup GMRES parameters */
             /* at least should apply 1 solve */
@@ -973,7 +981,11 @@ hypre_ILUSetup( void               *ilu_vdata,
                      hypre_ParKrylovAxpy,
                      hypre_ParKrylovIdentitySetup, //parCSR A -- inactive
                      hypre_ParKrylovIdentity ); //parCSR A -- inactive
+#if defined(HYPRE_MIXED_PRECISION)
+            schur_solver = ( (HYPRE_Solver) hypre_GMRESCreate( gmres_functions, HYPRE_REAL_DOUBLE ) );
+#else
             schur_solver = ( (HYPRE_Solver) hypre_GMRESCreate( gmres_functions ) );
+#endif 
 
             /* setup GMRES parameters */
             /* at least should apply 1 solve */

@@ -24,9 +24,11 @@ HYPRE_SStructPCGCreate( MPI_Comm             comm,
          hypre_SStructKrylovClearVector,
          hypre_SStructKrylovScaleVector, hypre_SStructKrylovAxpy,
          hypre_SStructKrylovIdentitySetup, hypre_SStructKrylovIdentity );
-
+#if defined(HYPRE_MIXED_PRECISION) //DOK-temp
+   *solver = ( (HYPRE_SStructSolver) hypre_PCGCreate( pcg_functions, HYPRE_REAL_DOUBLE ) );
+#else
    *solver = ( (HYPRE_SStructSolver) hypre_PCGCreate( pcg_functions ) );
-
+#endif
    return hypre_error_flag;
 }
 

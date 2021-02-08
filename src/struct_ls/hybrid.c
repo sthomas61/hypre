@@ -463,8 +463,11 @@ hypre_HybridSolveUsePCG( hypre_HybridData  *hybrid_data )
          hypre_StructKrylovClearVector,
          hypre_StructKrylovScaleVector, hypre_StructKrylovAxpy,
          hypre_StructKrylovIdentitySetup, hypre_StructKrylovIdentity );
+#if defined(HYPRE_MIXED_PRECISION) //DOK-temp
+   krylov_solver = hypre_PCGCreate( pcg_functions, HYPRE_REAL_DOUBLE );
+#else
    krylov_solver = hypre_PCGCreate( pcg_functions );
-
+#endif
    hypre_PCGSetTol(krylov_solver, tol);
    hypre_PCGSetAbsoluteTolFactor(krylov_solver, pcg_atolf);
    hypre_PCGSetTwoNorm(krylov_solver, two_norm);
@@ -502,8 +505,11 @@ hypre_HybridSolveUseGMRES( hypre_HybridData  *hybrid_data )
          hypre_StructKrylovClearVector,
          hypre_StructKrylovScaleVector, hypre_StructKrylovAxpy,
          hypre_StructKrylovIdentitySetup, hypre_StructKrylovIdentity );
+#if defined(HYPRE_MIXED_PRECISION)
+   krylov_solver = hypre_GMRESCreate( gmres_functions, HYPRE_REAL_DOUBLE );
+#else
    krylov_solver = hypre_GMRESCreate( gmres_functions );
-
+#endif
    hypre_GMRESSetTol(krylov_solver, tol);
    hypre_GMRESSetKDim(krylov_solver, k_dim);
    hypre_GMRESSetStopCrit(krylov_solver, stop_crit);

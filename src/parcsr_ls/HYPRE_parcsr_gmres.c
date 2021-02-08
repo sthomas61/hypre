@@ -10,7 +10,34 @@
 /*--------------------------------------------------------------------------
  * HYPRE_ParCSRGMRESCreate
  *--------------------------------------------------------------------------*/
+#if defined(HYPRE_MIXED_PRECISION)
+/** Should we remove MP appendix so this function has the same name as original function? **/
+HYPRE_Int
+HYPRE_ParCSRGMRESCreateMP( MPI_Comm comm, HYPRE_Solver *solver, HYPRE_Precision solver_precision )
+{
+   hypre_GMRESFunctions * gmres_functions;
 
+   if (!solver)
+   {
+      hypre_error_in_arg(2);
+      return hypre_error_flag;
+   }
+   gmres_functions =
+      hypre_GMRESFunctionsCreate(
+         hypre_CAlloc, hypre_ParKrylovFree, hypre_ParKrylovCommInfo,
+         hypre_ParKrylovCreateVector,
+         hypre_ParKrylovCreateVectorArray,
+         hypre_ParKrylovDestroyVector, hypre_ParKrylovMatvecCreate,
+         hypre_ParKrylovMatvec, hypre_ParKrylovMatvecDestroy,
+         hypre_ParKrylovInnerProd, hypre_ParKrylovCopyVector,
+         hypre_ParKrylovClearVector,
+         hypre_ParKrylovScaleVector, hypre_ParKrylovAxpy,
+         hypre_ParKrylovIdentitySetup, hypre_ParKrylovIdentity );
+   *solver = ( (HYPRE_Solver) hypre_GMRESCreate( gmres_functions, solver_precision ) );
+
+   return hypre_error_flag;
+}
+#else /** Keep users from using original create function in mixed-precision mode */
 HYPRE_Int
 HYPRE_ParCSRGMRESCreate( MPI_Comm comm, HYPRE_Solver *solver )
 {
@@ -36,7 +63,7 @@ HYPRE_ParCSRGMRESCreate( MPI_Comm comm, HYPRE_Solver *solver )
 
    return hypre_error_flag;
 }
-
+#endif
 /*--------------------------------------------------------------------------
  * HYPRE_ParCSRGMRESDestroy
  *--------------------------------------------------------------------------*/

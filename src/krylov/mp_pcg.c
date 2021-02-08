@@ -8,29 +8,31 @@
 #include "_hypre_utilities.h"
 #include "krylov.h"
 
-
+/*** NOTE: The functions in this file are only built when Mixed-Precision is enabled ***/
 
 /*--------------------------------------------------------------------------
 * *hypre_PCGCreate
 *--------------------------------------------------------------------------*/
 void 
-*hypre_PCGCreate( hypre_PCGFunctions *pcg_functions)
+*hypre_PCGCreate( hypre_PCGFunctions *pcg_functions, HYPRE_Precision solver_precision)
 {
-   hypre_PCGData *pcg_data = (hypre_PCGData *)pcg_functions;
-   switch (pcg_data-> solver_precision)
+   hypre_PCGData *pcg_data;
+   switch (solver_precision)
    {
       case HYPRE_REAL_SINGLE:
-         hypre_PCGCreate_flt ( pcg_functions);
+         pcg_data = (hypre_PCGData *)hypre_PCGCreate_flt ( pcg_functions);
          break;
       case HYPRE_REAL_DOUBLE:
-         hypre_PCGCreate_dbl ( pcg_functions);
+         pcg_data = (hypre_PCGData *)hypre_PCGCreate_dbl ( pcg_functions);
          break;
       case HYPRE_REAL_LONGDOUBLE:
-         hypre_PCGCreate_ldbl ( pcg_functions);
+         pcg_data = (hypre_PCGData *)hypre_PCGCreate_ldbl ( pcg_functions);
          break;
       default:
          hypre_printf("Unknown solver precision" );
    }
+   /* set solver precision for solver data */
+   pcg_data->solver_precision = solver_precision;
    return (void*)pcg_data;
 }
 

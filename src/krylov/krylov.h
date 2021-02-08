@@ -454,7 +454,9 @@ extern "C" {
     HYPRE_Int     logging;  /* extra computations for logging when logging>0 */
     HYPRE_Real  *norms;
     char    *log_file_name;
-    HYPRE_Precision solver_precision;
+#if defined(HYPRE_MIXED_PRECISION)   
+   HYPRE_Precision solver_precision;
+#endif
   } hypre_GMRESData;
 
 #define hypre_GMRESDataHybrid(pcgdata)  ((pcgdata) -> hybrid)
@@ -504,8 +506,11 @@ extern "C" {
      * @param param [IN] ...
      **/
 
-    void *
-      hypre_GMRESCreate( hypre_GMRESFunctions *gmres_functions );
+#if defined(HYPRE_MIXED_PRECISION)
+  void *hypre_GMRESCreate ( hypre_GMRESFunctions *gmres_functions, HYPRE_Precision solver_precision );
+#else  
+  void *hypre_GMRESCreate ( hypre_GMRESFunctions *gmres_functions );
+#endif        
 
 #ifdef __cplusplus
   }
@@ -1138,7 +1143,9 @@ extern "C" {
     HYPRE_Int     logging;  /* extra computations for logging when logging>0 */
     HYPRE_Real  *norms;
     HYPRE_Real  *rel_norms;
-    HYPRE_Precision solver_precision;
+#if defined(HYPRE_MIXED_PRECISION)   
+   HYPRE_Precision solver_precision;
+#endif
 
   } hypre_PCGData;
 
@@ -1189,8 +1196,11 @@ extern "C" {
      * @param param [IN] ...
      **/
 
-    void *
-      hypre_PCGCreate( hypre_PCGFunctions *pcg_functions );
+#if defined(HYPRE_MIXED_PRECISION)
+  void *hypre_PCGCreate ( hypre_PCGFunctions *pcg_functions, HYPRE_Precision solver_precision );
+#else
+  void *hypre_PCGCreate ( hypre_PCGFunctions *pcg_functions );
+#endif
 
 #ifdef __cplusplus
   }
@@ -1235,7 +1245,11 @@ extern "C" {
   HYPRE_Int hypre_CGNRGetFinalRelativeResidualNorm ( void *cgnr_vdata , HYPRE_Real *relative_residual_norm );
 
   /* gmres.c */
+#if defined(HYPRE_MIXED_PRECISION)
+  void *hypre_GMRESCreate ( hypre_GMRESFunctions *gmres_functions, HYPRE_Precision solver_precision );
+#else  
   void *hypre_GMRESCreate ( hypre_GMRESFunctions *gmres_functions );
+#endif  
   void *hypre_GMRESCreate_flt ( hypre_GMRESFunctions *gmres_functions );
   void *hypre_GMRESCreate_dbl ( hypre_GMRESFunctions *gmres_functions );
   void *hypre_GMRESCreate_ldbl ( hypre_GMRESFunctions *gmres_functions );
@@ -1661,7 +1675,11 @@ extern "C" {
   HYPRE_Int HYPRE_PCGGetResidual ( HYPRE_Solver solver , void *residual );
 
   /* pcg.c */
+#if defined(HYPRE_MIXED_PRECISION)
+  void *hypre_PCGCreate ( hypre_PCGFunctions *pcg_functions, HYPRE_Precision solver_precision );
+#else
   void *hypre_PCGCreate ( hypre_PCGFunctions *pcg_functions );
+#endif
   void *hypre_PCGCreate_flt ( hypre_PCGFunctions *pcg_functions );
   void *hypre_PCGCreate_dbl ( hypre_PCGFunctions *pcg_functions );
   void *hypre_PCGCreate_ldbl ( hypre_PCGFunctions *pcg_functions );
