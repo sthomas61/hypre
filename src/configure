@@ -3166,6 +3166,18 @@ else
 
 fi
 
+# Check whether --enable-cusolver was given.
+if test "${enable_cusolver+set}" = set; then :
+  enableval=$enable_cusolver; case "${enableval}" in
+    yes) hypre_using_cusolver=yes ;;
+    no)  hypre_using_cusolver=no ;;
+    *)   hypre_using_cusolver=yes ;;
+ esac
+else
+  hypre_using_cusolver=no
+
+fi
+
 
 # Check whether --enable-cusolver was given.
 if test "${enable_cusolver+set}" = set; then :
@@ -9268,6 +9280,14 @@ $as_echo "#define HYPRE_USING_NVTX 1" >>confdefs.h
 $as_echo "#define HYPRE_USING_CUSPARSE 1" >>confdefs.h
 
       HYPRE_CUDA_LIBS+=" -lcusparse"
+   fi
+
+   if test "$hypre_using_cusolver" = "yes"
+   then
+
+$as_echo "#define HYPRE_USING_CUSOLVER 1" >>confdefs.h
+
+       HYPRE_CUDA_LIBS+=" -lcusolver"
    fi
 
    if test "$hypre_using_cublas" = "yes"

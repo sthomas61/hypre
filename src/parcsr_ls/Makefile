@@ -1,4 +1,4 @@
-# Copyright (c) 1998 Lawrence Livermore National Security, LLC and other
+B# Copyright (c) 1998 Lawrence Livermore National Security, LLC and other
 # HYPRE Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -152,6 +152,10 @@ CUFILES =\
  ams.c\
  ame.c\
  par_amg_setup.c\
+ par_ilu_setup_device.c\
+ par_ilu_solve_device.c\
+ par_ilu_solve_schur_gmres_device.c\
+ par_ilu_setup.c\
  par_ilu.c\
  par_ilu_setup.c \
  par_ilu_solve_device.c\

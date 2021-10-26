@@ -1,4 +1,4 @@
-/******************************************************************************
+B/******************************************************************************
  * Copyright (c) 1998 Lawrence Livermore National Security, LLC and other
  * HYPRE Project Developers. See the top-level COPYRIGHT file for details.
  *
@@ -98,7 +98,6 @@ HYPRE_ILUSetMaxIter( HYPRE_Solver solver, HYPRE_Int max_iter )
 /*--------------------------------------------------------------------------
  * HYPRE_ILUSetTriSolve
  *--------------------------------------------------------------------------*/
-
 HYPRE_Int
 HYPRE_ILUSetTriSolve( HYPRE_Solver solver, HYPRE_Int tri_solve )
 {

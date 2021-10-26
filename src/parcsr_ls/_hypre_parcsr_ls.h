@@ -3245,6 +3245,10 @@ HYPRE_Int hypre_ILUSetDropThreshold( void *ilu_vdata, HYPRE_Real threshold );
 HYPRE_Int hypre_ILUSetDropThresholdArray( void *ilu_vdata, HYPRE_Real *threshold );
 HYPRE_Int hypre_ILUSetType( void *ilu_vdata, HYPRE_Int ilu_type );
 HYPRE_Int hypre_ILUSetMaxIter( void *ilu_vdata, HYPRE_Int max_iter );
+HYPRE_Int hypre_ILUSetTriSolve( void *ilu_vdata, HYPRE_Int tri_solve );
+HYPRE_Int hypre_ILUSetRuizIters( void *ilu_vdata, HYPRE_Int ruiz_iters );
+HYPRE_Int hypre_ILUSetLowerJacobiIters( void *ilu_vdata, HYPRE_Int lower_jacobi_iters );
+HYPRE_Int hypre_ILUSetUpperJacobiIters( void *ilu_vdata, HYPRE_Int upper_jacobi_iters );
 HYPRE_Int hypre_ILUSetTol( void *ilu_vdata, HYPRE_Real tol );
 HYPRE_Int hypre_ILUSetTriSolve( void *ilu_vdata, HYPRE_Int tri_solve );
 HYPRE_Int hypre_ILUSetLowerJacobiIters( void *ilu_vdata, HYPRE_Int lower_jacobi_iters );
@@ -3371,6 +3375,11 @@ void *hypre_ParILURAPSchurGMRESMatvecCreateH(void *ilu_vdata, void *x);
 HYPRE_Int hypre_ParILURAPSchurGMRESMatvecH(void *matvec_data, HYPRE_Complex alpha, void *ilu_vdata,
                                            void *x, HYPRE_Complex beta, void *y);
 HYPRE_Int hypre_ParILURAPSchurGMRESMatvecDestroyH(void *matvec_data );
+HYPRE_Int hypre_ILULocalRCMBuildG(hypre_CSRMatrix *A, HYPRE_Int start, HYPRE_Int end,
+                                  HYPRE_Int **permp, HYPRE_Int **qpermp, hypre_CSRMatrix **G);
+HYPRE_Int hypre_ILULocalRCMBuildFinalPerm(HYPRE_Int start, HYPRE_Int end,
+                                          HYPRE_Int * G_perm, HYPRE_Int *perm, HYPRE_Int *qperm,
+                                          HYPRE_Int **permp, HYPRE_Int **qpermp);
 HYPRE_Int hypre_ILULocalRCM( hypre_CSRMatrix *A, HYPRE_Int start, HYPRE_Int end, HYPRE_Int **permp,
                              HYPRE_Int **qpermp, HYPRE_Int sym);
 HYPRE_Int hypre_ILULocalRCMNumbering(hypre_CSRMatrix *A, HYPRE_Int root, HYPRE_Int *marker,

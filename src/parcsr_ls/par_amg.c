@@ -4225,6 +4225,7 @@ hypre_BoomerAMGSetILUMaxIter( void     *data,
 
    return hypre_error_flag;
 }
+
 HYPRE_Int
 hypre_BoomerAMGSetILUMaxRowNnz( void     *data,
                                 HYPRE_Int       ilu_max_row_nnz)

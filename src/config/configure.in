@@ -2323,6 +2323,12 @@ then
       HYPRE_CUDA_LIBS+=" -lcusparse"
    fi
 
+   if test "$hypre_using_cusolver" = "yes"
+   then
+      AC_DEFINE(HYPRE_USING_CUSOLVER, 1, [Define to 1 if using cuSolver])
+      HYPRE_CUDA_LIBS+=" -lcusolver"
+   fi
+
    if test "$hypre_using_cublas" = "yes"
    then
       AC_DEFINE(HYPRE_USING_CUBLAS, 1, [Define to 1 if using cuBLAS])
