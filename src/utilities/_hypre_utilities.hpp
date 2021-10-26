@@ -78,6 +78,7 @@ struct hypre_device_allocator
 #include <curand.h>
 #include <cublas_v2.h>
 #include <cusparse.h>
+#include <cusolverSp.h>
 
 #ifndef CUDART_VERSION
 #error CUDART_VERSION Undefined!
@@ -214,6 +215,14 @@ struct hypre_device_allocator
       hypre_assert(0); exit(1);                                                              \
    } } while(0)
 
+#define HYPRE_CUSOLVER_CALL(call) do {                                                       \
+   cusolverStatus_t err = call;                                                              \
+   if (CUSOLVER_STATUS_SUCCESS != err) {                                                     \
+      printf("CUSOLVER ERROR (code = %d) at %s:%d\n",                                        \
+            err, __FILE__, __LINE__);                                                        \
+      hypre_assert(0); exit(1);                                                              \
+   } } while(0)
+
 #define HYPRE_ROCSPARSE_CALL(call) do {                                                      \
    rocsparse_status err = call;                                                              \
    if (rocsparse_status_success != err) {                                                    \
@@ -278,6 +287,10 @@ struct hypre_DeviceData
 
 #if defined(HYPRE_USING_CUSPARSE)
    cusparseHandle_t                  cusparse_handle;
+#endif
+
+#if defined(HYPRE_USING_CUSOLVER)
+   cusolverSpHandle_t                cusolverSp_handle;
 #endif
 
 #if defined(HYPRE_USING_ROCSPARSE)
@@ -373,6 +386,10 @@ cublasHandle_t      hypre_DeviceDataCublasHandle(hypre_DeviceData *data);
 
 #if defined(HYPRE_USING_CUSPARSE)
 cusparseHandle_t    hypre_DeviceDataCusparseHandle(hypre_DeviceData *data);
+#endif
+
+#if defined(HYPRE_USING_CUSOLVER)
+cusolverSpHandle_t  hypre_DeviceDataCusolverSpHandle(hypre_DeviceData *data);
 #endif
 
 #if defined(HYPRE_USING_ROCSPARSE)
